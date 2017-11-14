@@ -1,0 +1,1 @@
+INSERT INTO Business(businessName, businessTag) VALUES ('test', 't');

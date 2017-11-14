@@ -1,47 +1,60 @@
+DROP TABLE IF EXISTS WorkLog;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS BusinessClient;
+DROP TABLE IF EXISTS Roles;
+
+DROP TABLE IF EXISTS Account;
+DROP TABLE IF EXISTS Business;
+
 CREATE TABLE Account (
-	accountId int AUTO_INCREMENT,
-    userName varchar(255) NOT NULL,
+    userName varchar(255),
     userPassword varchar(255) NOT NULL,
-    PRIMARY KEY (accountId)
+    email varchar(255),
+    PRIMARY KEY (userName)
 );
 
 CREATE TABLE Business (
-	businessId int AUTO_INCREMENT,
-    businessName varchar(255) NOT NULL,
     businessTag varchar(255),
-    PRIMARY KEY (businessId)
+    businessName varchar(255) NOT NULL,
+    PRIMARY KEY (businessTag)
 );
 
 CREATE TABLE Employee (
-	employeeId int AUTO_INCREMENT,
-    accountId int,
+    userName varchar(255),
     firstName varchar(255) NOT NULL,
     surName varchar(255) NOT NULL,
-    businessId int,
-    parentId int,
+    businessTag varchar(255) NOT NULL,
+    parentUser varchar(255),
     jobRole varchar(255),
-    PRIMARY KEY (employeeId),
-    FOREIGN KEY (accountId) REFERENCES Account(accountId),
-	FOREIGN KEY (businessId) REFERENCES Business(businessId),
-    FOREIGN KEY (parentId) REFERENCES Employee(employeeId)
+    PRIMARY KEY (userName),
+    CONSTRAINT fk_Employee_Account_userName FOREIGN KEY (userName) REFERENCES Account(userName),
+	CONSTRAINT fk_Employee_Business_businessTag FOREIGN KEY (businessTag) REFERENCES Business(businessTag),
+    CONSTRAINT fk_Employee_Employee_employeeId FOREIGN KEY (parentUser) REFERENCES Employee(userName)
 );
 
 CREATE TABLE BusinessClient (
 	clientId int AUTO_INCREMENT,
     clientName varchar(255) NOT NULL,
-    businessId int,
+    businessTag varchar(255) NOT NULL,
     PRIMARY KEY (clientId),
-    FOREIGN KEY (businessId) REFERENCES Business(businessId)
+    CONSTRAINT fk_BusinessClient_Business_businessTag FOREIGN KEY (businessTag) REFERENCES Business(businessTag)
 );
 
 CREATE TABLE WorkLog (
 	workLogId int AUTO_INCREMENT,
-    employeeId int,
-    clientId int,
+    user varchar(255) NOT NULL,
+    clientId int NOT NULL,
     startTime long NOT NULL,
     endTime long NOT NULL,
     description varchar(255),
     PRIMARY KEY (workLogId),
-    FOREIGN KEY (employeeId) REFERENCES Employee(employeeId),
+    CONSTRAINT fk_WorkLog_Employee_userName FOREIGN KEY (user) REFERENCES Employee(userName),
     FOREIGN KEY (clientId) REFERENCES BusinessClient(clientId)
+);
+
+CREATE TABLE Roles (
+    userName varchar(255),
+    userRole varchar(255),
+    PRIMARY KEY (userName),
+    CONSTRAINT fk_Roles_Account_userName FOREIGN KEY (userName) REFERENCES Account(userName)
 )

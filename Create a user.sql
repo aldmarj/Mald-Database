@@ -1,0 +1,2 @@
+CREATE USER 'aldmar'@'%' IDENTIFIED BY 'aldmar';
+GRANT SELECT,INSERT,UPDATE,DELETE,DROP ON *.* TO 'aldmar'@'%';

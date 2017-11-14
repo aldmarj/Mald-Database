@@ -1,0 +1,1 @@
+INSERT INTO BusinessClient(clientName, businessTag) VALUES ("1", "tagBusinessClient");
