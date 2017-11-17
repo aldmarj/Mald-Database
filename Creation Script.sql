@@ -1,16 +1,16 @@
 DROP TABLE IF EXISTS WorkLog;
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS BusinessClient;
-DROP TABLE IF EXISTS Roles;
 
-DROP TABLE IF EXISTS Account;
 DROP TABLE IF EXISTS Business;
+DROP TABLE IF EXISTS Account;
 
 CREATE TABLE Account (
     userName varchar(255),
     userPassword varchar(255) NOT NULL,
+	businessTag varchar(255) NOT NULL,
     email varchar(255),
-    PRIMARY KEY (userName)
+    PRIMARY KEY (userName, businessTag)
 );
 
 CREATE TABLE Business (
@@ -26,8 +26,8 @@ CREATE TABLE Employee (
     businessTag varchar(255) NOT NULL,
     parentUser varchar(255),
     jobRole varchar(255),
-    PRIMARY KEY (userName),
-    CONSTRAINT fk_Employee_Account_userName FOREIGN KEY (userName) REFERENCES Account(userName),
+    PRIMARY KEY (userName, businessTag),
+    CONSTRAINT fk_Employee_Account_uNBT FOREIGN KEY (userName, businessTag) REFERENCES Account(userName, businessTag),
 	CONSTRAINT fk_Employee_Business_businessTag FOREIGN KEY (businessTag) REFERENCES Business(businessTag),
     CONSTRAINT fk_Employee_Employee_employeeId FOREIGN KEY (parentUser) REFERENCES Employee(userName)
 );
@@ -51,10 +51,3 @@ CREATE TABLE WorkLog (
     CONSTRAINT fk_WorkLog_Employee_userName FOREIGN KEY (user) REFERENCES Employee(userName),
     FOREIGN KEY (clientId) REFERENCES BusinessClient(clientId)
 );
-
-CREATE TABLE Roles (
-    userName varchar(255),
-    userRole varchar(255),
-    PRIMARY KEY (userName),
-    CONSTRAINT fk_Roles_Account_userName FOREIGN KEY (userName) REFERENCES Account(userName)
-)
