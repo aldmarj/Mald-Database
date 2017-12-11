@@ -36,7 +36,7 @@ CREATE TABLE Location (
 );
 
 CREATE TABLE Employee (
-    userName varchar(255),
+    userName varchar(255) NOT NULL,
     firstName varchar(255) NOT NULL,
     surName varchar(255) NOT NULL,
     businessTag varchar(255) NOT NULL,
@@ -62,8 +62,8 @@ CREATE TABLE BusinessClient (
 
 CREATE TABLE WorkLog (
 	workLogId int AUTO_INCREMENT,
-    userName varchar(255),
-    businessTag varchar(255),
+    userName varchar(255) NOT NULL,
+    businessTag varchar(255) NOT NULL,
     clientId int NOT NULL,
     startTime long NOT NULL,
     endTime long NOT NULL,
@@ -78,8 +78,8 @@ CREATE TABLE WorkLog (
 );
 
 CREATE TABLE LocationOwnertoLocation (
-    locationOwnerId int,
-    locationId int,
+    locationOwnerId int NOT NULL,
+    locationId int NOT NULL,
     PRIMARY KEY (locationOwnerId, locationId),
 	CONSTRAINT fk_LocationOwnertoLocation_LocationOwner_locationOwnerId 
 		FOREIGN KEY (locationOwnerId) REFERENCES LocationOwner(locationOwnerId),
