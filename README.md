@@ -5,6 +5,7 @@ The Employee Managment System (EMS) is a system for tracking which employees hav
 The raw sql files are stored in this project. These are used to manipulate the database directly.
 
 # ER Diagram
+Green indicates a joint foreign key.
 
 ![Er Diagram](https://i.imgur.com/3M91yk4.png)
 
